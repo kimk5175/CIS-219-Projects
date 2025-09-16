@@ -1,0 +1,494 @@
+Student Name: Kim
+Chapter 4 Lab Assignment
+
+HANDS-ON Exercises.
+
+Answer to Question 1
+================
+SQL> CREATE TABLE store_reps (
+  2      rep_ID NUMBER(5) PRIMARY KEY,
+  3      last VARCHAR2(15),
+  4      first VARCHAR2(10),
+  5      comm CHAR(1) DEFAULT 'Y'
+  6  );
+
+SQL> desc store_reps
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ REP_ID                                                NOT NULL NUMBER(5)
+ LAST                                                           VARCHAR2(15)
+ FIRST                                                          VARCHAR2(10)
+ COMM                                                           CHAR(1)
+
+SQL> SELECT column_name, data_default
+  2  FROM user_tab_columns
+  3  WHERE table_name = 'STORE_REPS';
+
+COLUMN_NAME
+----------------------------------------------------------------------------------------------------
+DATA_DEFAULT
+--------------------------------------------------------------------------------
+REP_ID
+
+
+LAST
+
+
+FIRST
+
+
+COMM
+'Y'
+
+Answer to Question 2
+================
+
+SQL> ALTER TABLE store_reps
+  2  MODIFY last VARCHAR2(15) NOT NULL;
+
+Table altered.
+
+SQL> ALTER TABLE store_reps
+  2  MODIFY first VARCHAR2(10) NOT NULL;
+
+Table altered.
+
+SQL> SELECT column_name, nullable
+  2  FROM user_tab_columns
+  3  WHERE table_name = 'STORE_REPS';
+
+COLUMN_NAME
+----------------------------------------------------------------------------------------------------
+N
+-
+REP_ID
+N
+
+LAST
+N
+
+FIRST
+N
+
+COMM
+Y
+
+
+Answer to Question 3
+================
+
+SQL> ALTER TABLE store_reps
+  2  ADD CONSTRAINT chk_comm CHECK (comm IN ('Y', 'N'));
+
+Table altered.
+
+SQL> SELECT constraint_name, search_condition
+  2  FROM user_constraints
+  3  WHERE table_name = 'STORE_REPS';
+
+CONSTRAINT_NAME
+----------------------------------------------------------------------------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+SYS_C008346
+"LAST" IS NOT NULL
+
+SYS_C008347
+"FIRST" IS NOT NULL
+
+CHK_COMM
+comm IN ('Y', 'N')
+
+SYS_C008345
+
+
+Answer to Question 4
+================
+
+SQL> SELECT column_name, data_type
+  2  FROM user_tab_columns
+  3  WHERE table_name = 'STORE_REPS';
+
+COLUMN_NAME
+----------------------------------------------------------------------------------------------------
+DATA_TYPE
+----------------------------------------------------------------------------------------------------
+REP_ID
+NUMBER
+
+LAST
+VARCHAR2
+
+FIRST
+VARCHAR2
+
+COMM
+CHAR
+
+BASE_SALARY
+NUMBER
+
+
+SQL>
+SQL> SELECT constraint_name, search_condition
+  2  FROM user_constraints
+  3  WHERE table_name = 'STORE_REPS';
+
+CONSTRAINT_NAME
+----------------------------------------------------------------------------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+SYS_C008346
+"LAST" IS NOT NULL
+
+SYS_C008347
+"FIRST" IS NOT NULL
+
+CHK_COMM
+comm IN ('Y', 'N')
+
+CHK_BASE_SALARY
+Base_salary > 0
+
+SYS_C008345
+
+
+Answer to Question 5
+================
+
+SQL> CREATE TABLE BOOK_STORES (
+  2      Store_ID NUMBER(8) PRIMARY KEY,
+  3      Name VARCHAR2(30) UNIQUE NOT NULL,
+  4      Contact VARCHAR2(30),
+  5      Rep_ID VARCHAR2(5)
+  6  );
+
+Table created.
+
+SQL> desc book_stores
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STORE_ID                                              NOT NULL NUMBER(8)
+ NAME                                                  NOT NULL VARCHAR2(30)
+ CONTACT                                                        VARCHAR2(30)
+ REP_ID                                                         VARCHAR2(5)
+
+
+
+Answer to Question 6
+================
+
+There will be an error because both were created as two different data types, one as VARCHAR2 and the other a NUMBER.
+
+SQL> SELECT column_name, data_type
+  2  FROM user_tab_columns
+  3  WHERE table_name IN ('BOOK_STORES', 'STORE_REPS');
+
+COLUMN_NAME
+----------------------------------------------------------------------------------------------------
+DATA_TYPE
+----------------------------------------------------------------------------------------------------
+STORE_ID
+NUMBER
+
+NAME
+VARCHAR2
+
+CONTACT
+VARCHAR2
+
+REP_ID
+VARCHAR2
+
+REP_ID
+NUMBER
+
+LAST
+VARCHAR2
+
+FIRST
+VARCHAR2
+
+COMM
+CHAR
+
+BASE_SALARY
+NUMBER
+
+
+9 rows selected.
+
+SQL> ALTER TABLE BOOK_STORES MODIFY Rep_ID NUMBER(5);
+
+Table altered.
+
+SQL> SELECT column_name, data_type
+  2  FROM user_tab_columns
+  3  WHERE table_name IN ('BOOK_STORES', 'STORE_REPS');
+
+COLUMN_NAME
+----------------------------------------------------------------------------------------------------
+DATA_TYPE
+----------------------------------------------------------------------------------------------------
+STORE_ID
+NUMBER
+
+NAME
+VARCHAR2
+
+CONTACT
+VARCHAR2
+
+REP_ID
+NUMBER
+
+REP_ID
+NUMBER
+
+LAST
+VARCHAR2
+
+FIRST
+VARCHAR2
+
+COMM
+CHAR
+
+BASE_SALARY
+NUMBER
+
+
+9 rows selected.
+
+
+SQL> ALTER TABLE BOOK_STORES
+  2  ADD CONSTRAINT fk_rep_id FOREIGN KEY (Rep_ID)
+  3  REFERENCES STORE_REPS (Rep_ID);
+
+Table altered.
+
+SQL> ALTER TABLE BOOK_STORES
+  2  ADD CONSTRAINT fk_rep_id FOREIGN KEY (Rep_ID)
+  3  REFERENCES STORE_REPS (Rep_ID);
+
+Table altered.
+
+SQL> desc BOOK_STORES
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STORE_ID                                              NOT NULL NUMBER(8)
+ NAME                                                  NOT NULL VARCHAR2(30)
+ CONTACT                                                        VARCHAR2(30)
+ REP_ID                                                         NUMBER(5)
+
+SQL> SELECT constraint_name, search_condition
+  2  FROM user_constraints
+  3  WHERE table_name = 'BOOK_STORES';
+
+CONSTRAINT_NAME
+----------------------------------------------------------------------------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+FK_REP_ID
+
+
+SYS_C008350
+"NAME" IS NOT NULL
+
+SYS_C008351
+
+
+SYS_C008352
+
+
+Answer to Question 7
+================
+
+When trying to add ON DELETE CASCADE I received an error saying that there was already a Foreign Key with that name. 
+I deleted the Foreign Key and added it in again together with ON DELETE CASCADE.
+
+SQL> ALTER TABLE BOOK_STORES DROP CONSTRAINT fk_rep_id;
+
+Table altered.
+
+SQL> ALTER TABLE BOOK_STORES
+  2  ADD CONSTRAINT fk_rep_id FOREIGN KEY (Rep_ID)
+  3  REFERENCES STORE_REPS (Rep_ID) ON DELETE CASCADE;
+
+Table altered.
+
+
+Answer to Question 8
+================
+
+SQL> CREATE TABLE REP_CONTRACTS (
+  2      Store_ID NUMBER(8),
+  3      Name NUMBER(5),
+  4      Quarter CHAR(3),
+  5      Rep_ID NUMBER(5),
+  6      PRIMARY KEY (Rep_ID, Store_ID, Quarter), -- Composite Primary Key
+  7      CONSTRAINT fk_rep_id_contracts FOREIGN KEY (Rep_ID) REFERENCES STORE_REPS (Rep_ID), -- Unique Foreign Key Name
+  8      CONSTRAINT fk_store_id_contracts FOREIGN KEY (Store_ID) REFERENCES BOOK_STORES (Store_ID) -- Unique Foreign Key Name
+  9  );
+
+Table created.
+
+SQL> SELECT constraint_name, constraint_type, table_name
+  2  FROM user_constraints
+  3  WHERE table_name = 'REP_CONTRACTS';
+
+CONSTRAINT_NAME
+----------------------------------------------------------------------------------------------------
+C
+-
+TABLE_NAME
+----------------------------------------------------------------------------------------------------
+FK_REP_ID_CONTRACTS
+R
+REP_CONTRACTS
+
+FK_STORE_ID_CONTRACTS
+R
+REP_CONTRACTS
+
+SYS_C008357
+P
+REP_CONTRACTS
+
+
+Answer to Question 9
+================
+
+SQL> SELECT
+  2      constraint_name,
+  3      constraint_type,
+  4      search_condition,
+  5      r_constraint_name,
+  6      status
+  7  FROM
+  8      user_constraints
+  9  WHERE
+ 10      table_name = 'STORE_REPS';
+
+CONSTRAINT_NAME
+----------------------------------------------------------------------------------------------------
+C SEARCH_CONDITION
+- --------------------------------------------------------------------------------
+R_CONSTRAINT_NAME
+----------------------------------------------------------------------------------------------------
+STATUS
+--------
+SYS_C008346
+C "LAST" IS NOT NULL
+
+ENABLED
+
+SYS_C008347
+C "FIRST" IS NOT NULL
+
+ENABLED
+
+CHK_COMM
+C comm IN ('Y', 'N')
+
+ENABLED
+
+CHK_BASE_SALARY
+C Base_salary > 0
+
+ENABLED
+
+SYS_C008345
+P
+
+ENABLED
+
+
+
+Answer to Question 10
+================
+
+SQL> ALTER TABLE STORE_REPS
+  2  DISABLE CONSTRAINT chk_base_salary;
+
+Table altered.
+
+SQL> ALTER TABLE STORE_REPS
+  2  ENABLE CONSTRAINT chk_base_salary;
+
+Table altered.
+
+
+
+ADVANCED CHALLENGE Exercises
+
+SQL> CREATE TABLE Project (
+  2      Proj# NUMBER PRIMARY KEY,
+  3      P_name VARCHAR2(50) NOT NULL,
+  4      P_desc VARCHAR2(255),
+  5      P_budget NUMBER(10, 2),
+  6      CONSTRAINT unique_p_name UNIQUE (P_name)
+  7  );
+
+Table created.
+
+SQL> CREATE TABLE Workorders (
+  2      Wo# NUMBER PRIMARY KEY,
+  3      Proj# NUMBER NOT NULL,
+  4      Wo_desc VARCHAR2(255) NOT NULL,
+  5      Wo_assigned VARCHAR2(100),
+  6      Wo_hours NUMBER(2, 2) NOT NULL,
+  7      Dates DATE,
+  8      Wo_complete CHAR(1),
+  9      CONSTRAINT fk_proj FOREIGN KEY (Proj#) REFERENCES Project (Proj#),
+ 10      CONSTRAINT unique_wo_desc UNIQUE (Wo_desc),
+ 11      CONSTRAINT chk_wo_hours CHECK (Wo_hours > 0),
+ 12      CONSTRAINT chk_wo_complete CHECK (Wo_complete IN ('Y', 'N'))
+ 13  );
+
+Table created.
+
+SQL> SELECT constraint_name, constraint_type
+  2  FROM user_constraints
+  3  WHERE table_name IN ('PROJECT', 'WORKORDERS');
+
+CONSTRAINT_NAME
+----------------------------------------------------------------------------------------------------
+C
+-
+SYS_C008360
+C
+
+SYS_C008361
+P
+
+UNIQUE_P_NAME
+U
+
+SYS_C008363
+C
+
+SYS_C008364
+C
+
+SYS_C008365
+C
+
+CHK_WO_HOURS
+C
+
+CHK_WO_COMPLETE
+C
+
+SYS_C008368
+P
+
+UNIQUE_WO_DESC
+U
+
+FK_PROJ
+R
+
+
+11 rows selected.
+

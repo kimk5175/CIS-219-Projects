@@ -1,0 +1,617 @@
+Student Name: Kim
+Chapter 9 Lab Assignment
+
+HANDS-ON Exercises.
+
+Answer to Question 1
+================
+
+SQL> SELECT b.Title, p.Name, p.Phone
+  2  FROM Books b, Publisher p
+  3  WHERE b.PubID = p.PubID;
+
+TITLE                          NAME                    PHONE
+------------------------------ ----------------------- ------------
+REVENGE OF MICKEY              PRINTING IS US          000-714-8321
+HOW TO MANAGE THE MANAGER      PRINTING IS US          000-714-8321
+E-BUSINESS THE EASY WAY        PUBLISH OUR WAY         010-410-0010
+BUILDING A CAR WITH TOOTHPICKS PUBLISH OUR WAY         010-410-0010
+HOLY GRAIL OF ORACLE           AMERICAN PUBLISHING     800-555-1211
+DATABASE IMPLEMENTATION        AMERICAN PUBLISHING     800-555-1211
+HANDCRANKED COMPUTERS          AMERICAN PUBLISHING     800-555-1211
+COOKING WITH MUSHROOMS         READING MATERIALS INC.  800-555-9743
+THE WOK WAY TO COOK            READING MATERIALS INC.  800-555-9743
+HOW TO GET FASTER PIZZA        READING MATERIALS INC.  800-555-9743
+BODYBUILD IN 10 MINUTES A DAY  READING MATERIALS INC.  800-555-9743
+
+TITLE                          NAME                    PHONE
+------------------------------ ----------------------- ------------
+PAINLESS CHILD-REARING         REED-N-RITE             800-555-8284
+BIG BEAR AND LITTLE DOVE       REED-N-RITE             800-555-8284
+SHORTEST POEMS                 REED-N-RITE             800-555-8284
+
+14 rows selected.
+
+SQL> SELECT b.Title, p.Name, p.Phone
+  2  FROM Books b
+  3  JOIN Publisher p ON b.PubID = p.PubID;
+
+TITLE                          NAME                    PHONE
+------------------------------ ----------------------- ------------
+REVENGE OF MICKEY              PRINTING IS US          000-714-8321
+HOW TO MANAGE THE MANAGER      PRINTING IS US          000-714-8321
+E-BUSINESS THE EASY WAY        PUBLISH OUR WAY         010-410-0010
+BUILDING A CAR WITH TOOTHPICKS PUBLISH OUR WAY         010-410-0010
+HOLY GRAIL OF ORACLE           AMERICAN PUBLISHING     800-555-1211
+DATABASE IMPLEMENTATION        AMERICAN PUBLISHING     800-555-1211
+HANDCRANKED COMPUTERS          AMERICAN PUBLISHING     800-555-1211
+COOKING WITH MUSHROOMS         READING MATERIALS INC.  800-555-9743
+THE WOK WAY TO COOK            READING MATERIALS INC.  800-555-9743
+HOW TO GET FASTER PIZZA        READING MATERIALS INC.  800-555-9743
+BODYBUILD IN 10 MINUTES A DAY  READING MATERIALS INC.  800-555-9743
+
+TITLE                          NAME                    PHONE
+------------------------------ ----------------------- ------------
+PAINLESS CHILD-REARING         REED-N-RITE             800-555-8284
+BIG BEAR AND LITTLE DOVE       REED-N-RITE             800-555-8284
+SHORTEST POEMS                 REED-N-RITE             800-555-8284
+
+14 rows selected.
+
+
+
+Answer to Question 2
+================
+
+SQL> SELECT o.Order#, c.FirstName, c.LastName, o.OrderDate
+  2  FROM Orders o, Customers c
+  3  WHERE o.Customer# = c.Customer#
+  4  AND o.ShipDate IS NULL
+  5  ORDER BY o.OrderDate;
+
+    ORDER# FIRSTNAME  LASTNAME   ORDERDATE
+---------- ---------- ---------- ---------
+      1012 BECCA      NELSON     03-APR-09
+      1016 LEILA      SMITH      04-APR-09
+      1015 KENNETH    FALAH      04-APR-09
+      1019 GREG       MONTIASA   05-APR-09
+      1018 BONITA     MORALES    05-APR-09
+      1020 KENNETH    JONES      05-APR-09
+
+6 rows selected.
+
+SQL> SELECT o.Order#, c.FirstName, c.LastName, o.OrderDate
+  2  FROM Orders o
+  3  JOIN Customers c ON o.Customer# = c.Customer#
+  4  WHERE o.ShipDate IS NULL
+  5  ORDER BY o.OrderDate;
+
+    ORDER# FIRSTNAME  LASTNAME   ORDERDATE
+---------- ---------- ---------- ---------
+      1012 BECCA      NELSON     03-APR-09
+      1016 LEILA      SMITH      04-APR-09
+      1015 KENNETH    FALAH      04-APR-09
+      1019 GREG       MONTIASA   05-APR-09
+      1018 BONITA     MORALES    05-APR-09
+      1020 KENNETH    JONES      05-APR-09
+
+6 rows selected.
+
+
+
+Answer to Question 3
+================
+
+SQL> SELECT DISTINCT c.Customer#, c.FirstName, c.LastName
+  2  FROM Customers c, Orders o, OrderItems oi, Books b
+  3  WHERE c.Customer# = o.Customer#
+  4  AND o.Order# = oi.Order#
+  5  AND oi.ISBN = b.ISBN
+  6  AND c.State = 'FL'
+  7  AND b.Category = 'COMPUTER';
+
+ CUSTOMER# FIRSTNAME  LASTNAME
+---------- ---------- ----------
+      1001 BONITA     MORALES
+      1003 LEILA      SMITH
+
+SQL> SELECT DISTINCT c.Customer#, c.FirstName, c.LastName
+  2  FROM Customers c
+  3  JOIN Orders o ON c.Customer# = o.Customer#
+  4  JOIN OrderItems oi ON o.Order# = oi.Order#
+  5  JOIN Books b ON oi.ISBN = b.ISBN
+  6  WHERE c.State = 'FL'
+  7  AND b.Category = 'COMPUTER';
+
+ CUSTOMER# FIRSTNAME  LASTNAME
+---------- ---------- ----------
+      1001 BONITA     MORALES
+      1003 LEILA      SMITH
+
+
+
+Answer to Question 4
+================
+
+SQL> SELECT DISTINCT b.Title
+  2  FROM Customers c, Orders o, OrderItems oi, Books b
+  3  WHERE c.Customer# = o.Customer#
+  4  AND o.Order# = oi.Order#
+  5  AND oi.ISBN = b.ISBN
+  6  AND c.FirstName = 'JAKE'
+  7  AND c.LastName = 'LUCAS';
+
+TITLE
+------------------------------
+HOW TO MANAGE THE MANAGER
+PAINLESS CHILD-REARING
+
+SQL> SELECT DISTINCT b.Title
+  2  FROM Customers c
+  3  JOIN Orders o ON c.Customer# = o.Customer#
+  4  JOIN OrderItems oi ON o.Order# = oi.Order#
+  5  JOIN Books b ON oi.ISBN = b.ISBN
+  6  WHERE c.FirstName = 'JAKE'
+  7  AND c.LastName = 'LUCAS';
+
+TITLE
+------------------------------
+HOW TO MANAGE THE MANAGER
+PAINLESS CHILD-REARING
+
+
+
+Answer to Question 5
+================
+
+SQL> SELECT o.OrderDate, b.Title, (oi.PaidEach - b.Cost) AS Profit
+  2  FROM Customers c, Orders o, OrderItems oi, Books b
+  3  WHERE c.Customer# = o.Customer#
+  4  AND o.Order# = oi.Order#
+  5  AND oi.ISBN = b.ISBN
+  6  AND c.FirstName = 'JAKE'
+  7  AND c.LastName = 'LUCAS'
+  8  ORDER BY Profit DESC, o.OrderDate;
+
+ORDERDATE TITLE                              PROFIT
+--------- ------------------------------ ----------
+31-MAR-09 PAINLESS CHILD-REARING              37.45
+03-APR-09 PAINLESS CHILD-REARING              37.45
+31-MAR-09 HOW TO MANAGE THE MANAGER           16.55
+
+SQL> SELECT o.OrderDate, b.Title, (oi.PaidEach - b.Cost) AS Profit
+  2  FROM Customers c
+  3  JOIN Orders o ON c.Customer# = o.Customer#
+  4  JOIN OrderItems oi ON o.Order# = oi.Order#
+  5  JOIN Books b ON oi.ISBN = b.ISBN
+  6  WHERE c.FirstName = 'JAKE'
+  7  AND c.LastName = 'LUCAS'
+  8  ORDER BY Profit DESC, o.OrderDate;
+
+ORDERDATE TITLE                              PROFIT
+--------- ------------------------------ ----------
+31-MAR-09 PAINLESS CHILD-REARING              37.45
+03-APR-09 PAINLESS CHILD-REARING              37.45
+31-MAR-09 HOW TO MANAGE THE MANAGER           16.55
+
+
+
+Answer to Question 6
+================
+
+SQL> SELECT b.Title
+  2  FROM Books b, BookAuthor ba, Author a
+  3  WHERE b.ISBN = ba.ISBN
+  4  AND ba.AuthorID = a.AuthorID
+  5  AND a.Lname = 'ADAMS';
+
+TITLE
+------------------------------
+DATABASE IMPLEMENTATION
+
+SQL> SELECT b.Title
+  2  FROM Books b
+  3  JOIN BookAuthor ba ON b.ISBN = ba.ISBN
+  4  JOIN Author a ON ba.AuthorID = a.AuthorID
+  5  WHERE a.Lname = 'ADAMS';
+
+TITLE
+------------------------------
+DATABASE IMPLEMENTATION
+
+
+
+Answer to Question 7
+================
+
+SQL> SELECT b.Title, b.Retail,
+  2  CASE
+  3      WHEN b.Retail <= 20 THEN 'Bookmark'
+  4      WHEN b.Retail > 20 AND b.Retail <= 50 THEN 'Coffee Mug'
+  5      WHEN b.Retail > 50 THEN 'T-Shirt'
+  6  END AS Gift
+  7  FROM Books b
+  8  WHERE b.Title = 'SHORTEST POEMS';
+
+TITLE                              RETAIL GIFT
+------------------------------ ---------- ----------
+SHORTEST POEMS                      39.95 Coffee Mug
+
+SQL> SELECT b.Title, b.Retail,
+  2  CASE
+  3      WHEN b.Retail <= 20 THEN 'Bookmark'
+  4      WHEN b.Retail > 20 AND b.Retail <= 50 THEN 'Coffee Mug'
+  5      WHEN b.Retail > 50 THEN 'T-Shirt'
+  6  END AS Gift
+  7  FROM Books b
+  8  WHERE b.Title = 'SHORTEST POEMS';
+
+TITLE                              RETAIL GIFT
+------------------------------ ---------- ----------
+SHORTEST POEMS                      39.95 Coffee Mug
+
+
+
+Answer to Question 8
+================
+
+SQL> SELECT DISTINCT a.Fname, a.Lname
+  2  FROM Customers c, Orders o, OrderItems oi, Books b, BookAuthor ba, Author a
+  3  WHERE c.Customer# = o.Customer#
+  4  AND o.Order# = oi.Order#
+  5  AND oi.ISBN = b.ISBN
+  6  AND b.ISBN = ba.ISBN
+  7  AND ba.AuthorID = a.AuthorID
+  8  AND c.FirstName = 'BECCA'
+  9  AND c.LastName = 'NELSON';
+
+FNAME      LNAME
+---------- ----------
+JANICE     JONES
+JACK       BAKER
+WILLIAM    WHITE
+LISA       WHITE
+ROBERT     ROBINSON
+OSCAR      FIELDS
+
+6 rows selected.
+
+SQL> SELECT DISTINCT a.Fname, a.Lname
+  2  FROM Customers c
+  3  JOIN Orders o ON c.Customer# = o.Customer#
+  4  JOIN OrderItems oi ON o.Order# = oi.Order#
+  5  JOIN Books b ON oi.ISBN = b.ISBN
+  6  JOIN BookAuthor ba ON b.ISBN = ba.ISBN
+  7  JOIN Author a ON ba.AuthorID = a.AuthorID
+  8  WHERE c.FirstName = 'BECCA'
+  9  AND c.LastName = 'NELSON';
+
+FNAME      LNAME
+---------- ----------
+JANICE     JONES
+JACK       BAKER
+WILLIAM    WHITE
+LISA       WHITE
+ROBERT     ROBINSON
+OSCAR      FIELDS
+
+6 rows selected.
+
+
+
+Answer to Question 9
+================
+
+SQL> SELECT b.Title, o.Order#, c.State
+  2  FROM Books b
+  3  LEFT OUTER JOIN OrderItems oi ON b.ISBN = oi.ISBN
+  4  LEFT OUTER JOIN Orders o ON oi.Order# = o.Order#
+  5  LEFT OUTER JOIN Customers c ON o.Customer# = c.Customer#;
+
+TITLE                              ORDER# ST
+------------------------------ ---------- --
+BODYBUILD IN 10 MINUTES A DAY        1003 FL
+COOKING WITH MUSHROOMS               1003 FL
+DATABASE IMPLEMENTATION              1003 FL
+COOKING WITH MUSHROOMS               1018 FL
+DATABASE IMPLEMENTATION              1018 FL
+E-BUSINESS THE EASY WAY              1006 FL
+PAINLESS CHILD-REARING               1016 FL
+COOKING WITH MUSHROOMS               1008 ID
+COOKING WITH MUSHROOMS               1000 WA
+REVENGE OF MICKEY                    1009 WA
+COOKING WITH MUSHROOMS               1009 WA
+
+TITLE                              ORDER# ST
+------------------------------ ---------- --
+HOLY GRAIL OF ORACLE                 1007 TX
+BIG BEAR AND LITTLE DOVE             1007 TX
+DATABASE IMPLEMENTATION              1007 TX
+E-BUSINESS THE EASY WAY              1007 TX
+REVENGE OF MICKEY                    1014 TX
+COOKING WITH MUSHROOMS               1020 WY
+PAINLESS CHILD-REARING               1001 GA
+HOW TO MANAGE THE MANAGER            1001 GA
+PAINLESS CHILD-REARING               1011 GA
+DATABASE IMPLEMENTATION              1002 IL
+DATABASE IMPLEMENTATION              1013 WY
+
+TITLE                              ORDER# ST
+------------------------------ ---------- --
+BIG BEAR AND LITTLE DOVE             1017 FL
+REVENGE OF MICKEY                    1012 MI
+HANDCRANKED COMPUTERS                1012 MI
+PAINLESS CHILD-REARING               1012 MI
+BIG BEAR AND LITTLE DOVE             1012 MI
+SHORTEST POEMS                       1005 GA
+REVENGE OF MICKEY                    1019 GA
+DATABASE IMPLEMENTATION              1010 NJ
+PAINLESS CHILD-REARING               1004 NJ
+COOKING WITH MUSHROOMS               1015 NJ
+HOW TO GET FASTER PIZZA
+
+TITLE                              ORDER# ST
+------------------------------ ---------- --
+THE WOK WAY TO COOK
+BUILDING A CAR WITH TOOTHPICKS
+
+35 rows selected.
+
+SQL> SELECT b.Title, o.Order#, c.State
+  2  FROM Books b
+  3  LEFT JOIN OrderItems oi ON b.ISBN = oi.ISBN
+  4  LEFT JOIN Orders o ON oi.Order# = o.Order#
+  5  LEFT JOIN Customers c ON o.Customer# = c.Customer#;
+
+TITLE                              ORDER# ST
+------------------------------ ---------- --
+BODYBUILD IN 10 MINUTES A DAY        1003 FL
+COOKING WITH MUSHROOMS               1003 FL
+DATABASE IMPLEMENTATION              1003 FL
+COOKING WITH MUSHROOMS               1018 FL
+DATABASE IMPLEMENTATION              1018 FL
+E-BUSINESS THE EASY WAY              1006 FL
+PAINLESS CHILD-REARING               1016 FL
+COOKING WITH MUSHROOMS               1008 ID
+COOKING WITH MUSHROOMS               1000 WA
+REVENGE OF MICKEY                    1009 WA
+COOKING WITH MUSHROOMS               1009 WA
+
+TITLE                              ORDER# ST
+------------------------------ ---------- --
+HOLY GRAIL OF ORACLE                 1007 TX
+BIG BEAR AND LITTLE DOVE             1007 TX
+DATABASE IMPLEMENTATION              1007 TX
+E-BUSINESS THE EASY WAY              1007 TX
+REVENGE OF MICKEY                    1014 TX
+COOKING WITH MUSHROOMS               1020 WY
+PAINLESS CHILD-REARING               1001 GA
+HOW TO MANAGE THE MANAGER            1001 GA
+PAINLESS CHILD-REARING               1011 GA
+DATABASE IMPLEMENTATION              1002 IL
+DATABASE IMPLEMENTATION              1013 WY
+
+TITLE                              ORDER# ST
+------------------------------ ---------- --
+BIG BEAR AND LITTLE DOVE             1017 FL
+REVENGE OF MICKEY                    1012 MI
+HANDCRANKED COMPUTERS                1012 MI
+PAINLESS CHILD-REARING               1012 MI
+BIG BEAR AND LITTLE DOVE             1012 MI
+SHORTEST POEMS                       1005 GA
+REVENGE OF MICKEY                    1019 GA
+DATABASE IMPLEMENTATION              1010 NJ
+PAINLESS CHILD-REARING               1004 NJ
+COOKING WITH MUSHROOMS               1015 NJ
+HOW TO GET FASTER PIZZA
+
+TITLE                              ORDER# ST
+------------------------------ ---------- --
+THE WOK WAY TO COOK
+BUILDING A CAR WITH TOOTHPICKS
+
+35 rows selected.
+
+
+
+Answer to Question 10
+================
+
+SQL> SELECT e.fname || ' ' || e.lname AS Employee_Name,
+  2         e.Job,
+  3         m.fname || ' ' || m.lname AS Manager_Name
+  4  FROM Employees e
+  5  LEFT OUTER JOIN Employees m ON e.empno = m.mgr
+  6  ORDER BY Manager_Name;
+
+EMPLOYEE_NAME                        JOB
+------------------------------------ ---------
+MANAGER_NAME
+------------------------------------
+JIM POTTS                            GTech1
+
+
+SAM SMITH                            GTech1
+
+
+SUE STUART                           MTech1
+
+
+
+EMPLOYEE_NAME                        JOB
+------------------------------------ ---------
+MANAGER_NAME
+------------------------------------
+BEN KING                             GTECH2
+JIM POTTS
+
+BEN KING                             GTECH2
+LARRY JONES
+
+BEN KING                             GTECH2
+SAM SMITH
+
+
+EMPLOYEE_NAME                        JOB
+------------------------------------ ---------
+MANAGER_NAME
+------------------------------------
+LARRY JONES                          MTech2
+SUE STUART
+
+
+7 rows selected.
+
+SQL> SELECT e.fname || ' ' || e.lname AS Employee_Name,
+  2         e.job,
+  3         m.fname || ' ' || m.lname AS Manager_Name
+  4  FROM Employees e
+  5  LEFT JOIN Employees m ON e.empno = m.mgr
+  6  ORDER BY Manager_Name;
+
+EMPLOYEE_NAME                        JOB
+------------------------------------ ---------
+MANAGER_NAME
+------------------------------------
+JIM POTTS                            GTech1
+
+
+SAM SMITH                            GTech1
+
+
+SUE STUART                           MTech1
+
+
+
+EMPLOYEE_NAME                        JOB
+------------------------------------ ---------
+MANAGER_NAME
+------------------------------------
+BEN KING                             GTECH2
+JIM POTTS
+
+BEN KING                             GTECH2
+LARRY JONES
+
+BEN KING                             GTECH2
+SAM SMITH
+
+
+EMPLOYEE_NAME                        JOB
+------------------------------------ ---------
+MANAGER_NAME
+------------------------------------
+LARRY JONES                          MTech2
+SUE STUART
+
+
+7 rows selected.
+
+
+
+
+
+ADVANCED CHALLENGE Exercise
+
+Promotions/Gifts - Books whose profits are $12 or less will receive a bookmark.
+Books whose profits are greater than $12 and less than or equal to $25 will receive a book label.
+Books whose profits are greater than $25 and less than or equal to $56 will receive a book cover.
+Any book that is over $56 profit will receive free shipping.
+
+SQL> SELECT b.title, p.name AS publisher_name,
+  2         (b.retail - b.cost) AS profit_amount,
+  3         CASE
+  4             WHEN b.retail <= 12 THEN 'Bookmark'
+  5             WHEN b.retail > 12 AND b.retail <= 25 THEN 'Book Labels'
+  6             WHEN b.retail > 25 AND b.retail <= 56 THEN 'Book Cover'
+  7     WHEN b.retail > 56 THEN 'Free Shipping'
+  8         END AS gift_description
+  9  FROM books b
+ 10  JOIN publisher p ON b.pubid = p.pubid
+ 11  ORDER BY profit_amount;
+
+TITLE                          PUBLISHER_NAME          PROFIT_AMOUNT
+------------------------------ ----------------------- -------------
+GIFT_DESCRIPT
+-------------
+HANDCRANKED COMPUTERS          AMERICAN PUBLISHING               3.2
+Book Labels
+
+BIG BEAR AND LITTLE DOVE       REED-N-RITE                      3.63
+Bookmark
+
+COOKING WITH MUSHROOMS         READING MATERIALS INC.           7.45
+Book Labels
+
+
+TITLE                          PUBLISHER_NAME          PROFIT_AMOUNT
+------------------------------ ----------------------- -------------
+GIFT_DESCRIPT
+-------------
+REVENGE OF MICKEY              PRINTING IS US                    7.8
+Book Labels
+
+THE WOK WAY TO COOK            READING MATERIALS INC.           9.75
+Book Cover
+
+HOW TO GET FASTER PIZZA        READING MATERIALS INC.           12.1
+Book Cover
+
+
+TITLE                          PUBLISHER_NAME          PROFIT_AMOUNT
+------------------------------ ----------------------- -------------
+GIFT_DESCRIPT
+-------------
+BODYBUILD IN 10 MINUTES A DAY  READING MATERIALS INC.           12.2
+Book Cover
+
+HOW TO MANAGE THE MANAGER      PRINTING IS US                  16.55
+Book Cover
+
+E-BUSINESS THE EASY WAY        PUBLISH OUR WAY                  16.6
+Book Cover
+
+
+TITLE                          PUBLISHER_NAME          PROFIT_AMOUNT
+------------------------------ ----------------------- -------------
+GIFT_DESCRIPT
+-------------
+SHORTEST POEMS                 REED-N-RITE                      18.1
+Book Cover
+
+BUILDING A CAR WITH TOOTHPICKS PUBLISH OUR WAY                 22.15
+Free Shipping
+
+DATABASE IMPLEMENTATION        AMERICAN PUBLISHING             24.55
+Book Cover
+
+
+TITLE                          PUBLISHER_NAME          PROFIT_AMOUNT
+------------------------------ ----------------------- -------------
+GIFT_DESCRIPT
+-------------
+HOLY GRAIL OF ORACLE           AMERICAN PUBLISHING              28.7
+Free Shipping
+
+PAINLESS CHILD-REARING         REED-N-RITE                     41.95
+Free Shipping
+
+
+14 rows selected.
+
+
+
+
+Unsold Books - These books may need special promotions or discounts in order to sell.
+
+SQL> SELECT isbn
+  2  FROM books
+  3  MINUS
+  4  SELECT isbn
+  5  FROM orderitems;
+
+ISBN
+----------
+0299282519
+0132149871
+4981341710

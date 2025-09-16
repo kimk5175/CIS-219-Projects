@@ -1,0 +1,189 @@
+Student Name: Kim
+Chapter 11 Lab Assignment
+
+HANDS-ON Exercises.
+
+Answer to Question 1
+================
+
+SQL> SELECT COUNT(DISTINCT title) "Number of Cooking Books"
+  2  FROM books
+  3  WHERE category = 'COOKING';
+
+Number of Cooking Books
+-------------
+            2
+
+
+
+Answer to Question 2
+================
+
+SQL> SELECT COUNT(*) "Retail Price More Than $30"
+  2  FROM books
+  3  WHERE retail > 30;
+
+Retail Price More Than $30
+--------------------------
+                         8
+
+
+
+Answer to Question 3
+================
+
+SQL> SELECT MAX(pubdate)
+  2  FROM books;
+
+MAX(PUBDA
+---------
+11-NOV-06
+
+
+
+Answer to Question 4
+================
+
+SQL> SELECT SUM((paideach-cost)*quantity)
+  2  FROM orders JOIN orderitems USING (order#)
+  3     JOIN books USING (isbn)
+  4  WHERE customer# = 1017;
+
+SUM((PAIDEACH-COST)*QUANTITY)
+-----------------------------
+                        55.28
+
+
+
+Answer to Question 5
+================
+
+SQL> SELECT MIN(retail)
+  2  FROM books
+  3  WHERE category = 'COMPUTER';
+
+MIN(RETAIL)
+-----------
+         25
+
+
+
+Answer to Question 6
+================
+
+SQL> SELECT AVG(SUM((paideach-cost)*quantity))
+  2  FROM orders JOIN orderitems USING (order#)
+  3     JOIN books USING (isbn)
+  4  GROUP BY order#;
+
+AVG(SUM((PAIDEACH-COST)*QUANTITY))
+----------------------------------
+                        31.9438095
+
+
+
+Answer to Question 7
+================
+
+SQL> SELECT customer#, COUNT(*)
+  2  FROM orders
+  3  GROUP BY customer#;
+
+ CUSTOMER#   COUNT(*)
+---------- ----------
+      1005          2
+      1010          2
+      1011          1
+      1001          2
+      1020          2
+      1018          2
+      1003          2
+      1007          2
+      1004          1
+      1019          1
+      1017          1
+      1014          1
+      1015          1
+      1008          1
+
+
+
+Answer to Question 8
+================
+
+SQL> SELECT name, category, AVG(retail)
+  2  FROM books
+  3     JOIN publisher USING (pubid)
+  4  WHERE category IN('COMPUTER', 'CHILDREN')
+  5  GROUP by name, category
+  6  HAVING AVG(retail) > 50;
+
+NAME                    CATEGORY     AVG(RETAIL)
+----------------------- ------------ -----------
+PUBLISH OUR WAY         CHILDREN           59.95
+PUBLISH OUR WAY         COMPUTER            54.5
+AMERICAN PUBLISHING     COMPUTER            52.3
+
+
+
+Answer to Question 9
+================
+
+SQL> SELECT DISTINCT firstname, lastname, order#
+  2  FROM customers
+  3     JOIN orders USING (customer#)
+  4     JOIN orderitems USING (order#)
+  5     JOIN books USING (isbn)
+  6  WHERE (state = 'FL' or state = 'GA')
+  7  GROUP BY order#, firstname, lastname
+  8  HAVING SUM(paideach*quantity) > 80;
+
+FIRSTNAME  LASTNAME       ORDER#
+---------- ---------- ----------
+JAKE       LUCAS            1001
+BONITA     MORALES          1003
+JAKE       LUCAS            1011
+LEILA      SMITH            1016
+
+
+
+Answer to Question 10
+================
+
+SQL> SELECT MAX(retail)
+  2  FROM books JOIN bookauthor USING (isbn)
+  3     JOIN author USING (authorid)
+  4  WHERE lname = 'WHITE' and fname = 'LISA';
+
+MAX(RETAIL)
+-----------
+      39.95
+
+
+
+
+ADVANCED CHALLENGE Exercise
+
+SQL> SELECT B.ISBN, B.Title, OI.Paideach, SUM(OI.Quantity) AS Quantity, B.Cost,
+  2  ((OI.Paideach - B.Cost) / OI.Paideach) * 100 AS ProfitPercentage
+  3  FROM BOOKS B JOIN ORDERITEMS OI ON B.ISBN = OI.ISBN
+  4  JOIN ORDERS O ON OI.Order# = O.Order#
+  5  GROUP BY B.ISBN, B.Title, B.Cost, OI.Paideach
+  6  HAVING ((OI.Paideach - B.Cost) / OI.Paideach) * 100 < 55
+  7  ORDER BY ProfitPercentage ASC;
+
+ISBN       TITLE                            PAIDEACH   QUANTITY       COST PROFITPERCENTAGE
+---------- ------------------------------ ---------- ---------- ---------- ----------------
+1915762492 HANDCRANKED COMPUTERS                  25          2       21.8             12.8
+9959789321 E-BUSINESS THE EASY WAY              54.5          2       37.9       30.4587156
+3957136468 HOLY GRAIL OF ORACLE                72.15          3      47.25       34.5114345
+0401140733 REVENGE OF MICKEY                      22          5       14.2       35.4545455
+3437212490 COOKING WITH MUSHROOMS              19.95          8       12.5       37.3433584
+1059831198 BODYBUILD IN 10 MINUTES A DAY       30.95          1      18.75       39.4184168
+8117949391 BIG BEAR AND LITTLE DOVE             8.95          4       5.32       40.5586592
+2491748320 PAINLESS CHILD-REARING              85.45          6         48       43.8267993
+8843172113 DATABASE IMPLEMENTATION             55.95          7       31.4       43.8784629
+2147428890 SHORTEST POEMS                      39.95          1      21.85       45.3066333
+9247381001 HOW TO MANAGE THE MANAGER           31.95          1       15.4        51.799687
+
+11 rows selected.

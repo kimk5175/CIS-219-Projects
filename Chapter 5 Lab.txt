@@ -1,0 +1,574 @@
+Student Name: Kim
+Chapter 5 Lab Assignment
+
+HANDS-ON Exercises.
+
+Answer to Question 1
+
+SQL> INSERT INTO ORDERS (Order#, Customer#, OrderDate)
+  2  VALUES (1021, 1009, '20-JUL-09');
+
+1 row created.
+
+SQL> SELECT * FROM ORDERS;
+
+    ORDER#  CUSTOMER# ORDERDATE SHIPDATE  SHIPSTREET         SHIPCITY        SH SHIPZ   SHIPCOST
+---------- ---------- --------- --------- ------------------ --------------- -- ----- ----------
+      1000       1005 31-MAR-09 02-APR-09 1201 ORANGE AVE    SEATTLE         WA 98114          2
+      1001       1010 31-MAR-09 01-APR-09 114 EAST SAVANNAH  ATLANTA         GA 30314          3
+      1002       1011 31-MAR-09 01-APR-09 58 TILA CIRCLE     CHICAGO         IL 60605          3
+      1003       1001 01-APR-09 01-APR-09 958 MAGNOLIA LANE  EASTPOINT       FL 32328          4
+      1004       1020 01-APR-09 05-APR-09 561 ROUNDABOUT WAY TRENTON         NJ 08601
+      1005       1018 01-APR-09 02-APR-09 1008 GRAND AVENUE  MACON           GA 31206          2
+      1006       1003 01-APR-09 02-APR-09 558A CAPITOL HWY.  TALLAHASSEE     FL 32307          2
+      1007       1007 02-APR-09 04-APR-09 9153 MAIN STREET   AUSTIN          TX 78710          7
+      1008       1004 02-APR-09 03-APR-09 69821 SOUTH AVENUE BOISE           ID 83707          3
+      1009       1005 03-APR-09 05-APR-09 9 LIGHTENING RD.   SEATTLE         WA 98110
+      1010       1019 03-APR-09 04-APR-09 384 WRONG WAY HOME MORRISTOWN      NJ 07960          2
+      1011       1010 03-APR-09 05-APR-09 102 WEST LAFAYETTE ATLANTA         GA 30311          2
+      1012       1017 03-APR-09           1295 WINDY AVENUE  KALMAZOO        MI 49002          6
+      1013       1014 03-APR-09 04-APR-09 7618 MOUNTAIN RD.  CODY            WY 82414          2
+      1014       1007 04-APR-09 05-APR-09 9153 MAIN STREET   AUSTIN          TX 78710          3
+      1015       1020 04-APR-09           557 GLITTER ST.    TRENTON         NJ 08606          2
+      1016       1003 04-APR-09           9901 SEMINOLE WAY  TALLAHASSEE     FL 32307          2
+      1017       1015 04-APR-09 05-APR-09 887 HOT ASPHALT ST MIAMI           FL 33112          3
+      1018       1001 05-APR-09           95812 HIGHWAY 98   EASTPOINT       FL 32328
+      1019       1018 05-APR-09           1008 GRAND AVENUE  MACON           GA 31206          2
+      1020       1008 05-APR-09           195 JAMISON LANE   CHEYENNE        WY 82003          2
+      1021       1009 20-JUL-09
+
+22 rows selected.
+
+Answer to Question 2
+================
+
+SQL> UPDATE ORDERS
+  2  SET SHIPZIP = '33222'
+  3  WHERE Order# = 1017;
+
+1 row updated.
+
+SQL> SELECT * FROM ORDERS;
+
+    ORDER#  CUSTOMER# ORDERDATE SHIPDATE  SHIPSTREET         SHIPCITY        SH SHIPZ   SHIPCOST
+---------- ---------- --------- --------- ------------------ --------------- -- ----- ----------
+      1000       1005 31-MAR-09 02-APR-09 1201 ORANGE AVE    SEATTLE         WA 98114          2
+      1001       1010 31-MAR-09 01-APR-09 114 EAST SAVANNAH  ATLANTA         GA 30314          3
+      1002       1011 31-MAR-09 01-APR-09 58 TILA CIRCLE     CHICAGO         IL 60605          3
+      1003       1001 01-APR-09 01-APR-09 958 MAGNOLIA LANE  EASTPOINT       FL 32328          4
+      1004       1020 01-APR-09 05-APR-09 561 ROUNDABOUT WAY TRENTON         NJ 08601
+      1005       1018 01-APR-09 02-APR-09 1008 GRAND AVENUE  MACON           GA 31206          2
+      1006       1003 01-APR-09 02-APR-09 558A CAPITOL HWY.  TALLAHASSEE     FL 32307          2
+      1007       1007 02-APR-09 04-APR-09 9153 MAIN STREET   AUSTIN          TX 78710          7
+      1008       1004 02-APR-09 03-APR-09 69821 SOUTH AVENUE BOISE           ID 83707          3
+      1009       1005 03-APR-09 05-APR-09 9 LIGHTENING RD.   SEATTLE         WA 98110
+      1010       1019 03-APR-09 04-APR-09 384 WRONG WAY HOME MORRISTOWN      NJ 07960          2
+      1011       1010 03-APR-09 05-APR-09 102 WEST LAFAYETTE ATLANTA         GA 30311          2
+      1012       1017 03-APR-09           1295 WINDY AVENUE  KALMAZOO        MI 49002          6
+      1013       1014 03-APR-09 04-APR-09 7618 MOUNTAIN RD.  CODY            WY 82414          2
+      1014       1007 04-APR-09 05-APR-09 9153 MAIN STREET   AUSTIN          TX 78710          3
+      1015       1020 04-APR-09           557 GLITTER ST.    TRENTON         NJ 08606          2
+      1016       1003 04-APR-09           9901 SEMINOLE WAY  TALLAHASSEE     FL 32307          2
+      1017       1015 04-APR-09 05-APR-09 887 HOT ASPHALT ST MIAMI           FL 33222          3
+      1018       1001 05-APR-09           95812 HIGHWAY 98   EASTPOINT       FL 32328
+      1019       1018 05-APR-09           1008 GRAND AVENUE  MACON           GA 31206          2
+      1020       1008 05-APR-09           195 JAMISON LANE   CHEYENNE        WY 82003          2
+      1021       1009 20-JUL-09
+
+22 rows selected.
+
+
+Answer to Question 3
+================
+
+SQL> COMMIT;
+
+Commit complete.
+
+
+Answer to Question 4
+================
+
+SQL> INSERT INTO ORDERS (Order#, Customer#, OrderDate)
+  2  VALUES (1022, 2000, '06-AUG-09');
+INSERT INTO ORDERS (Order#, Customer#, OrderDate)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.ORDERS_CUSTOMER#_FK) violated - parent key not found
+
+Customer# does not exist in the CUSTOMERS table.
+
+
+Answer to Question 5
+================
+
+SQL> INSERT INTO ORDERS (Order#, Customer#)
+  2  VALUES (1023, 1009);
+INSERT INTO ORDERS (Order#, Customer#)
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."ORDERS"."ORDERDATE")
+
+Missing OrderDate
+
+
+Answer to Question 6
+================
+
+SQL> UPDATE BOOKS
+  2  SET COST = '&COST'
+  3  WHERE ISBN ='&ISBN';
+
+Answer to Question 7
+================
+
+SQL> UPDATE BOOKS
+  2  SET COST = '&COST'
+  3  WHERE ISBN ='&ISBN';
+Enter value for cost: 20.00
+old   2: SET COST = '&COST'
+new   2: SET COST = '20.00'
+Enter value for isbn: 1059831198
+old   3: WHERE ISBN ='&ISBN'
+new   3: WHERE ISBN ='1059831198'
+
+1 row updated.
+
+SQL> SELECT * FROM BOOKS;
+
+ISBN       TITLE                          PUBDATE        PUBID       COST     RETAIL   DISCOUNT
+---------- ------------------------------ --------- ---------- ---------- ---------- ----------
+CATEGORY
+------------
+1059831198 BODYBUILD IN 10 MINUTES A DAY  21-JAN-05          4         20      30.95
+FITNESS
+
+0401140733 REVENGE OF MICKEY              14-DEC-05          1       14.2         22
+FAMILY LIFE
+
+4981341710 BUILDING A CAR WITH TOOTHPICKS 18-MAR-06          2       37.8      59.95          3
+CHILDREN
+
+8843172113 DATABASE IMPLEMENTATION        04-JUN-03          3       31.4      55.95
+COMPUTER
+
+3437212490 COOKING WITH MUSHROOMS         28-FEB-04          4       12.5      19.95
+COOKING
+
+3957136468 HOLY GRAIL OF ORACLE           31-DEC-05          3      47.25      75.95        3.8
+COMPUTER
+
+1915762492 HANDCRANKED COMPUTERS          21-JAN-05          3       21.8         25
+COMPUTER
+
+9959789321 E-BUSINESS THE EASY WAY        01-MAR-06          2       37.9       54.5
+COMPUTER
+
+2491748320 PAINLESS CHILD-REARING         17-JUL-04          5         48      89.95        4.5
+FAMILY LIFE
+
+0299282519 THE WOK WAY TO COOK            11-SEP-04          4         19      28.75
+COOKING
+
+8117949391 BIG BEAR AND LITTLE DOVE       08-NOV-05          5       5.32       8.95
+CHILDREN
+
+0132149871 HOW TO GET FASTER PIZZA        11-NOV-06          4      17.85      29.95        1.5
+SELF HELP
+
+9247381001 HOW TO MANAGE THE MANAGER      09-MAY-03          1       15.4      31.95
+BUSINESS
+
+2147428890 SHORTEST POEMS                 01-MAY-05          5      21.85      39.95
+LITERATURE
+
+
+14 rows selected.
+
+
+Answer to Question 8
+================
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM BOOKS;
+
+ISBN       TITLE                          PUBDATE        PUBID       COST     RETAIL   DISCOUNT
+---------- ------------------------------ --------- ---------- ---------- ---------- ----------
+CATEGORY
+------------
+1059831198 BODYBUILD IN 10 MINUTES A DAY  21-JAN-05          4      18.75      30.95
+FITNESS
+
+0401140733 REVENGE OF MICKEY              14-DEC-05          1       14.2         22
+FAMILY LIFE
+
+4981341710 BUILDING A CAR WITH TOOTHPICKS 18-MAR-06          2       37.8      59.95          3
+CHILDREN
+
+8843172113 DATABASE IMPLEMENTATION        04-JUN-03          3       31.4      55.95
+COMPUTER
+
+3437212490 COOKING WITH MUSHROOMS         28-FEB-04          4       12.5      19.95
+COOKING
+
+3957136468 HOLY GRAIL OF ORACLE           31-DEC-05          3      47.25      75.95        3.8
+COMPUTER
+
+1915762492 HANDCRANKED COMPUTERS          21-JAN-05          3       21.8         25
+COMPUTER
+
+9959789321 E-BUSINESS THE EASY WAY        01-MAR-06          2       37.9       54.5
+COMPUTER
+
+2491748320 PAINLESS CHILD-REARING         17-JUL-04          5         48      89.95        4.5
+FAMILY LIFE
+
+0299282519 THE WOK WAY TO COOK            11-SEP-04          4         19      28.75
+COOKING
+
+8117949391 BIG BEAR AND LITTLE DOVE       08-NOV-05          5       5.32       8.95
+CHILDREN
+
+0132149871 HOW TO GET FASTER PIZZA        11-NOV-06          4      17.85      29.95        1.5
+SELF HELP
+
+9247381001 HOW TO MANAGE THE MANAGER      09-MAY-03          1       15.4      31.95
+BUSINESS
+
+2147428890 SHORTEST POEMS                 01-MAY-05          5      21.85      39.95
+LITERATURE
+
+
+14 rows selected.
+
+
+Answer to Question 9
+================
+
+SQL> DELETE FROM orderitems WHERE order#=1005;
+
+1 row deleted.
+
+SQL> SELECT * FROM ORDERITEMS;
+
+    ORDER#      ITEM# ISBN         QUANTITY   PAIDEACH
+---------- ---------- ---------- ---------- ----------
+      1000          1 3437212490          1      19.95
+      1001          1 9247381001          1      31.95
+      1001          2 2491748320          1      85.45
+      1002          1 8843172113          2      55.95
+      1003          1 8843172113          1      55.95
+      1003          2 1059831198          1      30.95
+      1003          3 3437212490          1      19.95
+      1004          1 2491748320          2      85.45
+      1006          1 9959789321          1       54.5
+      1007          1 3957136468          3      72.15
+      1007          2 9959789321          1       54.5
+      1007          3 8117949391          1       8.95
+      1007          4 8843172113          1      55.95
+      1008          1 3437212490          2      19.95
+      1009          1 3437212490          1      19.95
+      1009          2 0401140733          1         22
+      1010          1 8843172113          1      55.95
+      1011          1 2491748320          1      85.45
+      1012          1 8117949391          1       8.95
+      1012          2 1915762492          2         25
+      1012          3 2491748320          1      85.45
+      1012          4 0401140733          1         22
+      1013          1 8843172113          1      55.95
+      1014          1 0401140733          2         22
+      1015          1 3437212490          1      19.95
+      1016          1 2491748320          1      85.45
+      1017          1 8117949391          2       8.95
+      1018          1 3437212490          1      19.95
+      1018          2 8843172113          1      55.95
+      1019          1 0401140733          1         22
+      1020          1 3437212490          1      19.95
+
+31 rows selected.
+
+
+Answer to Question 10
+================
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM ORDERITEMS;
+
+    ORDER#      ITEM# ISBN         QUANTITY   PAIDEACH
+---------- ---------- ---------- ---------- ----------
+      1000          1 3437212490          1      19.95
+      1001          1 9247381001          1      31.95
+      1001          2 2491748320          1      85.45
+      1002          1 8843172113          2      55.95
+      1003          1 8843172113          1      55.95
+      1003          2 1059831198          1      30.95
+      1003          3 3437212490          1      19.95
+      1004          1 2491748320          2      85.45
+      1005          1 2147428890          1      39.95
+      1006          1 9959789321          1       54.5
+      1007          1 3957136468          3      72.15
+      1007          2 9959789321          1       54.5
+      1007          3 8117949391          1       8.95
+      1007          4 8843172113          1      55.95
+      1008          1 3437212490          2      19.95
+      1009          1 3437212490          1      19.95
+      1009          2 0401140733          1         22
+      1010          1 8843172113          1      55.95
+      1011          1 2491748320          1      85.45
+      1012          1 8117949391          1       8.95
+      1012          2 1915762492          2         25
+      1012          3 2491748320          1      85.45
+      1012          4 0401140733          1         22
+      1013          1 8843172113          1      55.95
+      1014          1 0401140733          2         22
+      1015          1 3437212490          1      19.95
+      1016          1 2491748320          1      85.45
+      1017          1 8117949391          2       8.95
+      1018          1 3437212490          1      19.95
+      1018          2 8843172113          1      55.95
+      1019          1 0401140733          1         22
+      1020          1 3437212490          1      19.95
+
+32 rows selected.
+
+
+
+
+
+
+
+
+ADVANCED CHALLENGE Exercises
+
+Answer to Question 1
+================
+
+SQL> DROP TABLE CATEGORY;
+
+Table dropped.
+
+SQL> CREATE TABLE category (
+  2  catcode VARCHAR2(3),
+  3  catdesc VARCHAR2(11) NOT NULL,
+  4  CONSTRAINT category_code_pk PRIMARY KEY (catcode) );
+
+Table created.
+
+SQL> INSERT INTO category
+  2  VALUES ('BUS', 'BUSINESS');
+
+1 row created.
+
+SQL> INSERT INTO category
+  2  VALUES ('CHN', 'CHILDREN');
+
+1 row created.
+
+SQL> INSERT INTO category
+  2  VALUES ('COK', 'COOKING');
+
+1 row created.
+
+SQL> INSERT INTO category
+  2  VALUES ('COM', 'COMPUTER');
+
+1 row created.
+
+SQL> INSERT INTO category
+  2  VALUES ('FAL', 'FAMILY LIFE');
+
+1 row created.
+
+SQL> INSERT INTO category
+  2  VALUES ('FIT', 'FITNESS');
+
+1 row created.
+
+SQL> INSERT INTO category
+  2  VALUES ('SEH', 'SELF HELP');
+
+1 row created.
+
+SQL> INSERT INTO category
+  2  VALUES ('LIT', 'LITERATURE');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+	
+
+Answer to Question 2
+================
+
+SQL> ALTER TABLE books
+  2  ADD (catcode VARCHAR2(3),
+  3  CONSTRAINT books_catcode_fk FOREIGN KEY (catcode)
+  4  REFERENCES category(catcode));
+
+Table altered.
+
+
+SQL> DESC BOOKS;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ISBN                                                  NOT NULL VARCHAR2(10)
+ TITLE                                                          VARCHAR2(30)
+ PUBDATE                                                        DATE
+ PUBID                                                          NUMBER(2)
+ COST                                                           NUMBER(5,2)
+ RETAIL                                                         NUMBER(5,2)
+ DISCOUNT                                                       NUMBER(4,2)
+ CATEGORY                                                       VARCHAR2(12)
+ CATCODE                                                        VARCHAR2(3)
+
+
+Answer to Question 3
+================
+
+SQL> UPDATE books
+  2  SET catcode = 'BUS'
+  3  WHERE category = 'BUSINESS';
+
+1 row updated.
+
+SQL> UPDATE books
+  2  SET catcode = 'CHN'
+  3  WHERE category = 'CHILDREN';
+
+2 rows updated.
+
+SQL> UPDATE books
+  2  SET catcode = 'COK'
+  3  WHERE category = 'COOKING';
+
+2 rows updated.
+
+SQL> UPDATE books
+  2  SET catcode = 'COM'
+  3  WHERE category = 'COMPUTER';
+
+4 rows updated.
+
+SQL> UPDATE books
+  2  SET catcode = 'FAL'
+  3  WHERE category = 'FAMILY LIFE';
+
+2 rows updated.
+
+SQL> UPDATE books
+  2  SET catcode = 'FIT'
+  3  WHERE category = 'FITNESS';
+
+1 row updated.
+
+SQL> UPDATE books
+  2  SET catcode = 'SEH'
+  3  WHERE category = 'SELF HELP';
+
+1 row updated.
+
+SQL> UPDATE books
+  2  SET catcode = 'LIT'
+  3  WHERE category = 'LITERATURE';
+
+1 row updated.
+
+SQL> COMMIT;
+
+Commit complete.
+
+	
+
+Answer to Question 4
+================
+
+SQL> SELECT * FROM BOOKS;
+
+ISBN       TITLE                          PUBDATE        PUBID       COST     RETAIL   DISCOUNT
+---------- ------------------------------ --------- ---------- ---------- ---------- ----------
+CATEGORY     CAT
+------------ ---
+1059831198 BODYBUILD IN 10 MINUTES A DAY  21-JAN-05          4      18.75      30.95
+FITNESS      FIT
+
+0401140733 REVENGE OF MICKEY              14-DEC-05          1       14.2         22
+FAMILY LIFE  FAL
+
+4981341710 BUILDING A CAR WITH TOOTHPICKS 18-MAR-06          2       37.8      59.95          3
+CHILDREN     CHN
+
+8843172113 DATABASE IMPLEMENTATION        04-JUN-03          3       31.4      55.95
+COMPUTER     COM
+
+3437212490 COOKING WITH MUSHROOMS         28-FEB-04          4       12.5      19.95
+COOKING      COK
+
+3957136468 HOLY GRAIL OF ORACLE           31-DEC-05          3      47.25      75.95        3.8
+COMPUTER     COM
+
+1915762492 HANDCRANKED COMPUTERS          21-JAN-05          3       21.8         25
+COMPUTER     COM
+
+9959789321 E-BUSINESS THE EASY WAY        01-MAR-06          2       37.9       54.5
+COMPUTER     COM
+
+2491748320 PAINLESS CHILD-REARING         17-JUL-04          5         48      89.95        4.5
+FAMILY LIFE  FAL
+
+0299282519 THE WOK WAY TO COOK            11-SEP-04          4         19      28.75
+COOKING      COK
+
+8117949391 BIG BEAR AND LITTLE DOVE       08-NOV-05          5       5.32       8.95
+CHILDREN     CHN
+
+0132149871 HOW TO GET FASTER PIZZA        11-NOV-06          4      17.85      29.95        1.5
+SELF HELP    SEH
+
+9247381001 HOW TO MANAGE THE MANAGER      09-MAY-03          1       15.4      31.95
+BUSINESS     BUS
+
+2147428890 SHORTEST POEMS                 01-MAY-05          5      21.85      39.95
+LITERATURE   LIT
+
+
+14 rows selected.
+
+
+Answer to Question 5
+================
+
+
+SQL> ALTER TABLE books
+  2  DROP column category;
+
+Table altered.
+
+SQL> SELECT * FROM BOOKS;
+
+ISBN       TITLE                          PUBDATE        PUBID       COST     RETAIL   DISCOUNT CAT
+---------- ------------------------------ --------- ---------- ---------- ---------- ---------- ---
+1059831198 BODYBUILD IN 10 MINUTES A DAY  21-JAN-05          4      18.75      30.95            FIT
+0401140733 REVENGE OF MICKEY              14-DEC-05          1       14.2         22            FAL
+4981341710 BUILDING A CAR WITH TOOTHPICKS 18-MAR-06          2       37.8      59.95          3 CHN
+8843172113 DATABASE IMPLEMENTATION        04-JUN-03          3       31.4      55.95            COM
+3437212490 COOKING WITH MUSHROOMS         28-FEB-04          4       12.5      19.95            COK
+3957136468 HOLY GRAIL OF ORACLE           31-DEC-05          3      47.25      75.95        3.8 COM
+1915762492 HANDCRANKED COMPUTERS          21-JAN-05          3       21.8         25            COM
+9959789321 E-BUSINESS THE EASY WAY        01-MAR-06          2       37.9       54.5            COM
+2491748320 PAINLESS CHILD-REARING         17-JUL-04          5         48      89.95        4.5 FAL
+0299282519 THE WOK WAY TO COOK            11-SEP-04          4         19      28.75            COK
+8117949391 BIG BEAR AND LITTLE DOVE       08-NOV-05          5       5.32       8.95            CHN
+0132149871 HOW TO GET FASTER PIZZA        11-NOV-06          4      17.85      29.95        1.5 SEH
+9247381001 HOW TO MANAGE THE MANAGER      09-MAY-03          1       15.4      31.95            BUS
+2147428890 SHORTEST POEMS                 01-MAY-05          5      21.85      39.95            LIT
+
+14 rows selected.

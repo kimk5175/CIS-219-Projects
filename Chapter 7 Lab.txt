@@ -1,0 +1,235 @@
+Student Name: Kim
+Chapter 7 Lab Assignment
+
+HANDS-ON Exercises.
+
+Answer to Question 1
+================
+ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;
+
+SQL> CREATE USER kkim
+  2  IDENTIFIED BY tiger;
+
+User created.
+
+Answer to Question 2
+================
+
+Login denied as there were no privileges.
+
+
+Answer to Question 3
+================
+
+SQL> Grant create SESSION, CREATE TABLE, ALTER ANY TABLE
+  2  TO kkim;
+
+Grant succeeded.
+
+
+Answer to Question 4
+================
+
+SQL> ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;
+SQL> CREATE ROLE CUSTOMERREP;
+
+Role created.
+
+SQL> Grant insert, DELETE ON orders TO CUSTOMERREP;
+
+Grant succeeded.
+
+SQL> Grant insert, DELETE ON orderitems TO CUSTOMERREP;
+
+Grant succeeded.
+
+
+Answer to Question 5
+================
+
+SQL> GRANT CUSTOMERREP
+  2  TO kkim;
+
+Grant succeeded.
+
+
+
+Answer to Question 6
+================
+
+SQL> SELECT TABLE_NAME, PRIVILEGE, GRANTABLE
+  2  FROM ROLE_TAB_PRIVS
+  3  WHERE ROLE = 'CUSTOMERREP';
+
+TABLE_NAME
+--------------------------------------------------------------------------------
+PRIVILEGE                                GRA
+---------------------------------------- ---
+ORDERS
+DELETE                                   NO
+
+ORDERS
+INSERT                                   NO
+
+ORDERITEMS
+DELETE                                   NO
+
+
+TABLE_NAME
+--------------------------------------------------------------------------------
+PRIVILEGE                                GRA
+---------------------------------------- ---
+ORDERITEMS
+INSERT                                   NO
+
+
+
+Answer to Question 7
+================
+
+SQL> REVOKE DELETE ON ORDERS FROM CUSTOMERREP;
+
+Revoke succeeded.
+
+SQL> REVOKE DELETE ON ORDERITEMS FROM CUSTOMERREP;
+
+Revoke succeeded.
+
+SQL> SELECT TABLE_NAME, PRIVILEGE, GRANTABLE
+  2  FROM ROLE_TAB_PRIVS
+  3  WHERE ROLE = 'CUSTOMERREP';
+
+TABLE_NAME
+--------------------------------------------------------------------------------
+PRIVILEGE                                GRA
+---------------------------------------- ---
+ORDERS
+INSERT                                   NO
+
+ORDERITEMS
+INSERT                                   NO
+
+
+
+Answer to Question 8
+================
+
+SQL> REVOKE CUSTOMERREP FROM kkim;
+
+Revoke succeeded.
+
+
+
+Answer to Question 9
+================
+
+SQL> DROP ROLE CUSTOMERREP;
+
+Role dropped.
+
+SQL> SELECT * FROM DBA_ROLES WHERE ROLE = 'CUSTOMERREP';
+
+no rows selected
+
+
+
+Answer to Question 10
+================
+
+SQL> DROP USER kkim;
+
+USER dropped.
+
+
+
+
+ADVANCED CHALLENGE Exercise
+
+Table Access Requirements by Employee Group
+
+Account Managers
+
+	Tables needed: BOOKS, CUSTOMERS, ORDERS, PROMOTION, PUBLISHER
+
+	Purpose: Marketing activities, customer promotions, book-specific campaigns
+
+Data Entry Clerks
+
+	Tables needed: BOOKS, AUTHOR, BOOKAUTHOR, PUBLISHER, PROMOTION
+
+	Purpose: Inventory updates, price changes, new book additions
+
+Customer Service Representatives
+
+	Tables needed: CUSTOMERS, ORDERS, ORDERITEMS, BOOKS
+
+	Purpose: Customer account management, order processing
+
+
+
+
+Privilege Requirements by Employee Group
+
+Account Managers
+
+	SELECT on BOOKS, CUSTOMERS, ORDERS, PROMOTION, PUBLISHER
+
+	INSERT, UPDATE on PROMOTION
+
+	SELECT, UPDATE on CUSTOMERS (for marketing preferences)
+
+GRANT SELECT ON BOOKS TO Account_Manager_Role;
+GRANT SELECT ON CUSTOMERS TO Account_Manager_Role;
+GRANT SELECT ON ORDERS TO Account_Manager_Role;
+GRANT SELECT ON PUBLISHER TO Account_Manager_Role;
+GRANT SELECT, INSERT, UPDATE ON PROMOTION TO Account_Manager_Role;
+GRANT UPDATE ON CUSTOMERS TO Account_Manager_Role;
+
+Data Entry Clerks
+	
+	SELECT, INSERT, UPDATE on BOOKS, AUTHOR, BOOKAUTHOR, PUBLISHER
+
+	SELECT, INSERT, UPDATE, DELETE on PROMOTION
+
+GRANT SELECT, INSERT, UPDATE ON BOOKS TO Data_Entry_Role;
+GRANT SELECT, INSERT, UPDATE ON AUTHOR TO Data_Entry_Role;
+GRANT SELECT, INSERT, UPDATE ON BOOKAUTHOR TO Data_Entry_Role;
+GRANT SELECT, INSERT, UPDATE ON PUBLISHER TO Data_Entry_Role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON PROMOTION TO Data_Entry_Role;
+
+Customer Service Representatives
+
+	SELECT, INSERT, UPDATE on CUSTOMERS
+
+	SELECT, INSERT, UPDATE on ORDERS
+	
+	SELECT, INSERT, UPDATE on ORDERITEMS
+
+	SELECT on BOOKS
+
+GRANT SELECT, INSERT, UPDATE ON CUSTOMERS TO Customer_Service_Role;
+GRANT SELECT, INSERT, UPDATE ON ORDERS TO Customer_Service_Role;
+GRANT SELECT, INSERT, UPDATE ON ORDERITEMS TO Customer_Service_Role;
+GRANT SELECT ON BOOKS TO Customer_Service_Role;
+
+
+
+Role Creation for Employee Groups
+
+Account_Manager_Role 
+
+	Contains all privileges needed for marketing activities
+
+CREATE ROLE Account_Manager_Role;
+
+Data_Entry_Role
+
+	Contains all privileges needed for inventory management
+
+CREATE ROLE Data_Entry_Role;
+
+Customer_Service_Role
+
+	Contains all privileges needed for customer and order management
+
+CREATE ROLE Customer_Service_Role;
